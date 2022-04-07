@@ -7,20 +7,28 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .titulo-jogo{
-    width: 540px;
-    height: 63px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    font-weight: 700;
     font-size: 56px;
     margin: 40px 0px;
     color: #75B79E;
 }
 
+
 .box-conteudo{
     width: 1040px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
+    /*background-color: red;*/
 }
 
 img{
@@ -28,20 +36,50 @@ img{
     height: 100px;
 }
 
-.cards {
+
+.cards{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 117px;
     height: 146px;
+    padding: 10px 0px;
     background-color: #A7E9AF;
     border: 1px solid #99CEA8;
     box-sizing: border-box;
     border-radius: 5px;
     margin-right: 38px;
     margin-bottom: 34px;
+    backface-visibility: hidden;
+    transition: all .5s;
+    transform-style: preserve-3d;
 }
-.frente-carta{
-    width: 100px;
-    height: 100px;
+
+.back-cards {
+    transform: rotateY(180deg);
+}  
+
+.back-cards-virada {
+    transform: rotateY(0deg);
+}
+
+.frente-cards{
+    transform: rotateY(-180deg);
+}
+
+
+/*.face-cards .back-cards {
+    transform: rotateY(180deg);
+}
+
+.cards:hover .back-cards {
+    transform: rotateY(0deg);
+}
+
+.cards:hover .cards{
+    transform: rotateY(-180deg);
+}*/
+
+.escondido{
+    display: none;
 }
