@@ -21,14 +21,12 @@ body{
     color: #75B79E;
 }
 
-
 .box-conteudo{
     width: 1040px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    /*background-color: red;*/
 }
 
 img{
@@ -36,50 +34,38 @@ img{
     height: 100px;
 }
 
-
 .cards{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 117px;
     height: 146px;
-    padding: 10px 0px;
-    background-color: #A7E9AF;
-    border: 1px solid #99CEA8;
-    box-sizing: border-box;
-    border-radius: 5px;
     margin-right: 38px;
     margin-bottom: 34px;
+    position: relative;
+}
+
+.face {
+    width: 100%;
+    height: 100%;
+    background-color: #A7E9AF;
+    border: 1px solid #99CEA8;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
     backface-visibility: hidden;
     transition: all .5s;
     transform-style: preserve-3d;
 }
 
-.back-cards {
-    transform: rotateY(180deg);
-}  
-
-.back-cards-virada {
-    transform: rotateY(0deg);
-}
-
-.frente-cards{
-    transform: rotateY(-180deg);
-}
-
-
-/*.face-cards .back-cards {
-    transform: rotateY(180deg);
-}
-
-.cards:hover .back-cards {
-    transform: rotateY(0deg);
-}
-
-.cards:hover .cards{
-    transform: rotateY(-180deg);
-}*/
-
 .escondido{
     display: none;
+}
+
+.rotacao-esconder{
+    transform: rotateY(0deg);
+}
+
+.rotacao-aparecer{
+    transform: rotateY(-180deg);
 }

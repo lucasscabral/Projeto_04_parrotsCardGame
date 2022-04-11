@@ -1,132 +1,123 @@
 
 let qtdCartas;
 
-qtdCartas = Number(prompt("Com Quantas você quer jogar? Números pares entre 4 e 14, podendo escolher um desses támbem"));
+qtdCartas = Number(prompt("Com quantas cartas você quer jogar? Números pares entre 4 e 14, podendo escolher um desses também"));
 
 formarCartas(qtdCartas);
-function formarCartas(qntItens){
-    while(qtdCartas % 2 === 1){
-        qtdCartas = Number(prompt("Com Quantas você quer jogar?"));
+function formarCartas(qtdCartas){
+    while((qtdCartas % 2 === 1) || (qtdCartas < 4 || qtdCartas > 14)){
+        qtdCartas = Number(prompt("Com quantas cartas você quer jogar?"));
     }
     console.log(qtdCartas);
 }
- 
 
-montarDeck(qtdCartas);
-function montarDeck(decksFormadas){
-    let cardsDiv = document.querySelector(".box-conteudo");
-    cardsDiv.innerHTML = [];
+let cartas = [
+    "bobrossparrot.gif",
+    "explodyparrot.gif",
+    "fiestaparrot.gif",
+    "metalparrot.gif",
+    "revertitparrot.gif",
+    "tripletsparrot.gif",
+    "unicornparrot.gif"
+];
 
-    for(let i = 0; i < decksFormadas; i++){ 
-    cardsDiv.innerHTML += `<div class="cards" onclick="virarCarta(this)">
-    <img src="/imagens/front.png" class="costa-carta"/>
-    <img src="/imagens/bobrossparrot.gif" class="escondido"/>
-</div>`;
-    
-    }
-
-
-    console.log(cardsDiv);
-}
-
-function virarCarta(elemento){
-    let cardSelec = document.querySelector(".cards");
-    
-    if(cardSelec !== null){
-        elemento.classList.add("back-cards");
-        elemento.classList.remove("costa-carta");
-    }
-
-}  
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*minhaArray.sort(comparador); // Após esta linha, a minhaArray estará embaralhada
-
+// Após esta linha, a cartas estará embaralhada
+cartas.sort(comparador);
 
 // Esta função pode ficar separada do código acima, onde você preferir
 function comparador() { 
-	return Math.random() - 0.5; 
+    return Math.random() - 0.5; 
 }
-*/
 
+montarDeck(qtdCartas);
+function montarDeck(qtdCartas){
+    let cardsDiv = document.querySelector(".box-conteudo");
+    cardsDiv.innerHTML = [];
 
+    let qtdImagens = qtdCartas/2;
+    let cards= [];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//elemento.classList.remove("frente-carta");
-/*let cards = document.querySelectorAll(".cards");
-cards.classList.add("escondido");*/
-
-/*if(qtdEscolida === 4 ){
-    escolherCartas = document.querySelectorAll(".cards");
-    escolherCartas.c 
-
-
-/*function escolhaCartas(qtdCartas){
-
-
-
-}*/
-
-
-
-/*  
-}*/
-
-
-
-
-/*elemento.classList.remove("frente-carta");*/
-/*let cards = document.querySelectorAll(".cards");
-cards.classList.add("escondido");*/
-
-/*let qtdCartas = Number(prompt("Com Quantas você quer jogar? Números pares entre 4 e 14, podendo escolher um desses támbem"));
-
-while(qtdCartas % 2 === 1){
-    qtdCartas = Number(prompt("Com Quantas você quer jogar?"));
-}
-//
-function escolhaCartas(qtdCartas){
-
-let qtdEscolida = qtdCartas;
-let escolherCartas = [];
-
-if(qtdEscolida === 4 ){
-    escolherCartas = document.querySelectorAll(".cards");
-    escolherCartas.c 
-
+    for(let x=0; x<qtdImagens; x++){
+        cards.push(
+            `<div  class="cards" onclick="virarCarta(this)">
+                <div class="costa-carta face">
+                    <img src="/imagens/front.png"/>
+                </div>
+                <div class="frente-carta face escondido">
+                    <img src="/imagens/${cartas[x]}" data-name="${cartas[x]}">
+                </div>
+            </div>`
+            );
+            
+        cards.push(
+                `<div class="cards" onclick="virarCarta(this)">
+                    <div class="costa-carta face">
+                        <img src="/imagens/front.png"/>
+                    </div>
+                    <div class="frente-carta face escondido">
+                        <img src="/imagens/${cartas[x]}" data-name="${cartas[x]}">
+                    </div>
+                </div>`
+                );
     }
-}*/
 
+     cards.sort(comparador);
 
-
-/*for(let i = 0; i < qtdEscolida; i++){
-    escolherCartas.push[i];
-    alert("Foram 4");
+    for(let i=0; i<qtdCartas; i++){ 
+        cardsDiv.innerHTML += cards[i];
+    }
 }
-console.log(escolherCartas);*/
+
+
+
+let nJogadasGeral = 0;
+let nJogadasTentativa = 0;
+
+function virarCarta(elemento){
+    nJogadasGeral++;
+    nJogadasTentativa++;
+
+    let costaCarta = elemento.querySelector(".costa-carta");
+    costaCarta.classList.add("escondido");
+
+    let frenteCarta = elemento.querySelector(".frente-carta");
+    frenteCarta.classList.remove("escondido");
+
+    let cartaSelecionada = document.querySelector(".carta-selecionada");
+    
+    if(nJogadasTentativa <= 2){
+        elemento.classList.add("carta-selecionada");
+        if(cartaSelecionada !== null){
+            let imgDaCartaJaSelecionada = cartaSelecionada.querySelector(".frente-carta").querySelector("img");
+
+            let imgDaCartaSelecionada = frenteCarta.querySelector("img");
+
+            // verificar se sao iguais
+            if(imgDaCartaJaSelecionada.dataset.name == imgDaCartaSelecionada.dataset.name){
+                cartaSelecionada.removeAttribute("onclick");
+                elemento.removeAttribute("onclick");
+                elemento.classList.remove("carta-selecionada");
+                cartaSelecionada.classList.remove("carta-selecionada");
+
+            }else{
+                console.log('sao diferentes');
+                costaCarta.classList.remove("escondido");
+
+
+                 // tempo de 1s e vira as cartas novamente
+               setTimeout (function(){
+                costaCarta.classList.remove("escondido");
+                frenteCarta.classList.add("escondido");
+                elemento.classList.remove("carta-selecionada");
+
+                cartaSelecionada.classList.remove("carta-selecionada");
+                cartaSelecionada.querySelector(".costa-carta").classList.remove("escondido");
+                cartaSelecionada.querySelector(".frente-carta").classList.add("escondido");
+               }, 1000);
+            }
+            nJogadasTentativa = 0;
+        }
+    }
+
+    console.log(nJogadasGeral);
+} 
