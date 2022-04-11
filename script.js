@@ -104,7 +104,7 @@ function virarCarta(elemento){
                 elemento.classList.add("acertou");
                 let cartasAcertadas = document.getElementsByClassName("acertou");
                 if(cartasAcertadas.length === qtdCartas){
-                    alert(`Você ganhou em ${nJogadasGeral} jogadas`);
+                    alert(`Você ganhou em ${nJogadasGeral} jogadas!`);
                 }
 
             }else{
