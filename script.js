@@ -1,14 +1,13 @@
 
 let qtdCartas;
 
-qtdCartas = Number(prompt("Com quantas cartas você quer jogar? Números pares entre 4 e 14, podendo escolher um desses também"));
+qtdCartas = Number(prompt("Com quantas cartas você quer jogar? Números pares entre 4 e 14, podendo escolher um desses números também"));
 
 formarCartas(qtdCartas);
 function formarCartas(qtdCartas){
     while((qtdCartas % 2 === 1) || (qtdCartas < 4 || qtdCartas > 14)){
-        qtdCartas = Number(prompt("Com quantas cartas você quer jogar?"));
+        qtdCartas = Number(prompt("Com quantas cartas você quer jogar? Números pares entre 4 e 14, podendo escolher um desses números também ?"));
     }
-    console.log(qtdCartas);
 }
 
 let cartas = [
@@ -37,24 +36,24 @@ function montarDeck(qtdCartas){
     let qtdImagens = qtdCartas/2;
     let cards= [];
 
-    for(let x=0; x<qtdImagens; x++){
+    for(let x = 0; x < qtdImagens; x++){
         cards.push(
-            `<div  class="cards" onclick="virarCarta(this)">
-                <div class="costa-carta face">
-                    <img src="/imagens/front.png"/>
-                </div>
-                <div class="frente-carta face escondido">
-                    <img src="/imagens/${cartas[x]}" data-name="${cartas[x]}">
-                </div>
-            </div>`
-            );
+                `<div  class="cards" onclick="virarCarta(this)">
+                    <div class="costa-carta face">
+                        <img src="/imagens/front.png"/>
+                    </div>
+                    <div class="frente-carta face ">
+                        <img src="/imagens/${cartas[x]}" data-name="${cartas[x]}">
+                    </div>
+                </div>`
+                );
             
         cards.push(
                 `<div class="cards" onclick="virarCarta(this)">
                     <div class="costa-carta face">
                         <img src="/imagens/front.png"/>
                     </div>
-                    <div class="frente-carta face escondido">
+                    <div class="frente-carta face ">
                         <img src="/imagens/${cartas[x]}" data-name="${cartas[x]}">
                     </div>
                 </div>`
@@ -78,10 +77,12 @@ function virarCarta(elemento){
     nJogadasTentativa++;
 
     let costaCarta = elemento.querySelector(".costa-carta");
-    costaCarta.classList.add("escondido");
+    costaCarta.classList.add("rotacao-esconder");
+   
 
     let frenteCarta = elemento.querySelector(".frente-carta");
-    frenteCarta.classList.remove("escondido");
+    frenteCarta.classList.add("rotacao-aparecer");
+
 
     let cartaSelecionada = document.querySelector(".carta-selecionada");
     
@@ -102,30 +103,42 @@ function virarCarta(elemento){
                 
                 cartaSelecionada.classList.add("acertou");
                 elemento.classList.add("acertou");
-                let cartasAcertadas = document.getElementsByClassName("acertou");
-                if(cartasAcertadas.length === qtdCartas){
-                    alert(`Você ganhou em ${nJogadasGeral} jogadas!`);
-                }
+
+                jogoFinalizado ()
 
             }else{
-                console.log('sao diferentes');
-                costaCarta.classList.remove("escondido");
-
-
                  // tempo de 1s e vira as cartas novamente
                setTimeout (function(){
-                costaCarta.classList.remove("escondido");
-                frenteCarta.classList.add("escondido");
+                costaCarta.classList.remove("rotacao-esconder");
+                frenteCarta.classList.remove("rotacao-aparecer");
                 elemento.classList.remove("carta-selecionada");
 
                 cartaSelecionada.classList.remove("carta-selecionada");
-                cartaSelecionada.querySelector(".costa-carta").classList.remove("escondido");
-                cartaSelecionada.querySelector(".frente-carta").classList.add("escondido");
+                cartaSelecionada.querySelector(".costa-carta").classList.remove("rotacao-esconder");
+                cartaSelecionada.querySelector(".frente-carta").classList.remove("rotacao-aparecer");
                }, 1000);
             }
             nJogadasTentativa = 0;
         }
     }
-
-    console.log(nJogadasGeral);
 } 
+
+function jogoFinalizado (){
+    let cartasAcertadas = document.getElementsByClassName("acertou");
+    if(cartasAcertadas.length === qtdCartas){
+        alert(`Você ganhou em ${nJogadasGeral} jogadas!`);
+
+        reiniciarJogo()
+    }
+}
+
+function reiniciarJogo(){
+    let reiniciar = prompt("Você gostaria de reiniciar a partida? sim ou não ");
+
+    if(reiniciar === "sim"){
+        //reiniciar o jogo
+        location.reload();
+    }else if(reiniciar === "não"){
+        alert("Obrigado por jogar!");
+    }
+}

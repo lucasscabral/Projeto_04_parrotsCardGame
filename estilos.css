@@ -33,39 +33,45 @@ img{
 
 .cards{
     width: 117px;
-    height: 146px;
+    height: 146px;  
     margin-right: 38px;
     margin-bottom: 34px;
     position: relative;
 }
 
-.face {
-    width: 100%;
-    height: 100%;
+
+.face { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 117px;
+    height: 146px;
+    position: absolute;
     background-color: #A7E9AF;
     border: 1px solid #99CEA8;
     border-radius: 5px;
     box-shadow: 1px 1px 1px rgba(0,0,0,.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
     backface-visibility: hidden;
     transition: all .5s;
     transform-style: preserve-3d;
+}
+
+.frente-carta {
+    transform: rotateY(180deg);
+}
+
+.rotacao-aparecer{
+    transform: rotateY(0deg);
+}
+
+.rotacao-esconder{
+    transform: rotateY(-180deg);
 }
 
 .escondido{
     display: none;
 }
 
-.face .rotacao-esconder{
-    transform: rotateY(0deg);
-}
-
-.face .rotacao-aparecer{
-    transform: rotateY(-180deg);
-}
 
 @media (max-width: 860px) {
     h1 {
