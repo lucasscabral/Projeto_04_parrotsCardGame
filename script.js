@@ -96,8 +96,16 @@ function virarCarta(elemento){
             if(imgDaCartaJaSelecionada.dataset.name == imgDaCartaSelecionada.dataset.name){
                 cartaSelecionada.removeAttribute("onclick");
                 elemento.removeAttribute("onclick");
+
                 elemento.classList.remove("carta-selecionada");
                 cartaSelecionada.classList.remove("carta-selecionada");
+                
+                cartaSelecionada.classList.add("acertou");
+                elemento.classList.add("acertou");
+                let cartasAcertadas = document.getElementsByClassName("acertou");
+                if(cartasAcertadas.length === qtdCartas){
+                    alert(`Você ganhou em ${nJogadasGeral} jogadas`);
+                }
 
             }else{
                 console.log('sao diferentes');
